@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cresco Water · Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="login-section">
+        <div class="login-box">
+            <h2><i class="fas fa-droplet"></i> Cresco Admin</h2>
+            <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+            <button class="btn" onclick="login()">Login</button>
+            <div id="loginError" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" style="display: none;">
+        <!-- Header -->
+        <div class="admin-header">
+            <h1><i class="fas fa-droplet"></i> Cresco Admin Dashboard</h1>
+            <div>
+                <a href="index.html" class="btn" style="background: #2fa1c1; margin-right: 10px;"><i
+                        class="fas fa-home"></i> View Site</a>
+                <button class="btn logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-shopping-cart"></i>
+                <div>
+                    <h3 id="totalOrders">0</h3>
+                    <p>Total Orders</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h3 id="pendingOrders">0</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3 id="completedOrders">0</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h3 id="unreadMessages">0</h3>
+                    <p>Unread</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('orders')">Orders</button>
+            <button class="tab-btn" onclick="switchTab('messages')">Messages</button>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="ordersTab" class="tab-content active">
+            <div class="filters">
+                <select id="orderStatusFilter" onchange="filterOrders()">
+                    <option value="all">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <input type="text" id="orderSearch" placeholder="Search by name or phone..." onkeyup="filterOrders()">
+                <button class="btn" onclick="loadOrders()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div id="ordersList" class="data-list"></div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="messagesTab" class="tab-content">
+            <div class="filters">
+                <select id="messageFilter" onchange="filterMessages()">
+                    <option value="all">All Messages</option>
+                    <option value="unread">Unread</option>
+                    <option value="read">Read</option>
+                </select>
+                <button class="btn" onclick="loadMessages()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div id="messagesList" class="data-list"></div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <span class="close" onclick="closeModal('orderModal')">&times;</span>
+            </div>
+            <div id="orderDetails" class="modal-body"></div>
+            <div class="modal-footer">
+                <select id="updateStatus">
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <button class="btn" onclick="updateOrderStatus()">Update Status</button>
+                <button class="btn" onclick="markOrderCompleted()">✓ Mark Completed</button>
+                <button class="btn whatsapp" onclick="whatsappCustomer()"><i class="fab fa-whatsapp"></i>
+                    WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Details Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Message Details</h2>
+                <span class="close" onclick="closeModal('messageModal')">&times;</span>
+            </div>
+            <div id="messageDetails" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn" onclick="markMessageRead()">✓ Mark Read</button>
+                <button class="btn" onclick="markMessageUnread()">⟲ Mark Unread</button>
+                <button class="btn whatsapp" onclick="replyWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="btn" onclick="replyEmail()"><i class="fas fa-envelope"></i> Email</button>
+            </div>
+            <div class="reply-section">
+                <h3>Quick Reply:</h3>
+                <textarea id="replyMessage" rows="3" placeholder="Type your reply..."></textarea>
+                <button class="btn" onclick="sendReply()">Send Reply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
