@@ -358,6 +358,74 @@
             </div>
         </div>
     </section>
+        <!-- Contact Section with Real Google Maps -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Makutano Town (next to the market)</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+254 758 486 402</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@cresco.co.ke</p>
+                </div>
+                <div class="info-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <p>+254 758 486 402</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <p>Mon-Sat: 8am - 8pm<br>Sunday: 9am - 5pm</p>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3>Send us a message</h3>
+                <input type="text" id="contactName" placeholder="Your Name" required>
+                <input type="email" id="contactEmail" placeholder="Your Email" required>
+                <textarea id="contactMessage" placeholder="Your Message" rows="4" required></textarea>
+                <div class="button-group">
+                    <button class="btn primary" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <button class="btn whatsapp" onclick="contactViaWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                </div>
+                <div id="contactMessageStatus" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Google Maps Section -->
+        <div class="map-section">
+            <h3>Find Us Here</h3>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.753627069985!2d37.648392!3d0.052525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwMDMnMDkuMSJOIDM3wrAzOCc1NC4yIkU!5e0!3m2!1sen!2ske!4v1234567890!5m2!1sen!2ske" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0; border-radius: 20px;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="map-buttons">
+                <a href="https://maps.google.com/?q=Makutano+Town+Kenya" target="_blank" class="btn secondary">
+                    <i class="fas fa-directions"></i> Open in Google Maps
+                </a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Makutano+Town+Kenya" target="_blank" class="btn secondary">
+                    <i class="fas fa-route"></i> Get Directions
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -387,4 +455,5 @@
 
 
 </html>
+
 
