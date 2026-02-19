@@ -4,6 +4,24 @@ let refillPrice = 0;
 let bottlePrice = 0;
 let totalWithBottle = 0;
 
+// Helper function to safely format date
+function formatDate(timestamp) {
+    try {
+        if (timestamp && typeof timestamp.toDate === 'function') {
+            return timestamp.toDate();
+        } else if (timestamp && typeof timestamp === 'string') {
+            return new Date(timestamp);
+        } else if (timestamp && typeof timestamp === 'number') {
+            return new Date(timestamp);
+        } else {
+            return new Date();
+        }
+    } catch (error) {
+        console.error('Date parsing error:', error);
+        return new Date();
+    }
+}
+
 // Select product from pricing table
 function selectProduct(size, refill, emptyBottle, withBottle) {
     selectedSize = size;
@@ -36,7 +54,104 @@ function updatePrice() {
     document.getElementById('totalPrice').textContent = `KSh ${total}`;
 }
 
-// Place order - FIXED VERSION
+// Select service from services section
+function selectService(service) {
+    let size = '';
+    let refill = 0;
+    let empty = 0;
+    let withBottle = 0;
+
+    switch (service) {
+        case 'Water Refill':
+            size = '20 LTRS';
+            refill = 150;
+            empty = 300;
+            withBottle = 450;
+            break;
+        case 'Home Delivery':
+            size = '20 LTRS';
+            refill = 150;
+            empty = 300;
+            withBottle = 450;
+            document.getElementById('specialRequests').value = 'Home delivery requested';
+            break;
+        case 'Event Catering':
+            size = '20 LTRS';
+            refill = 150;
+            empty = 300;
+            withBottle = 450;
+            document.getElementById('specialRequests').value = 'Event catering: Please contact me for details';
+            break;
+        case 'Custom Branding':
+            size = '500 ML';
+            refill = 5;
+            empty = 25;
+            withBottle = 30;
+            document.getElementById('specialRequests').value = 'Custom branding: Please provide options';
+            break;
+        case 'Dispenser Rental':
+            size = 'Dispenser';
+            refill = 0;
+            empty = 500;
+            withBottle = 500;
+            document.querySelector('input[name="orderType"][value="withBottle"]').checked = true;
+            document.getElementById('specialRequests').value = 'Dispenser rental requested';
+            break;
+        case 'Bulk Supply':
+            size = '20 LTRS';
+            refill = 150;
+            empty = 300;
+            withBottle = 450;
+            document.getElementById('specialRequests').value = 'Bulk supply: Please contact me for quote';
+            break;
+        case 'Emergency Water':
+            size = '20 LTRS';
+            refill = 250; // Emergency price
+            empty = 300;
+            withBottle = 550;
+            document.getElementById('specialRequests').value = '🚨 EMERGENCY ORDER - URGENT';
+            document.getElementById('deliveryTime').value = 'ASAP - Within 1 hour';
+            break;
+        case 'Water Testing':
+            size = 'Water Testing';
+            refill = 500;
+            empty = 0;
+            withBottle = 500;
+            document.querySelector('input[name="orderType"][value="refill"]').checked = true;
+            document.getElementById('specialRequests').value = 'Water testing service requested';
+            break;
+        default:
+            size = '20 LTRS';
+            refill = 150;
+            empty = 300;
+            withBottle = 450;
+    }
+
+    selectProduct(size, refill, empty, withBottle);
+
+    // Show success message
+    showMessage('orderMessage', `✅ ${service} selected! Please complete the form below.`, 'success');
+}
+
+// Emergency order function
+function emergencyOrder() {
+    selectService('Emergency Water');
+
+    // Highlight the form
+    const orderForm = document.querySelector('.order-container');
+    orderForm.style.animation = 'highlight 1s ease';
+    setTimeout(() => {
+        orderForm.style.animation = '';
+    }, 1000);
+}
+
+// Open WhatsApp directly
+function openWhatsApp() {
+    const message = `Hello Cresco Water (Makutano Shop), I would like to make an order from your location next to Kinoru Dispensary.`;
+    window.open(`https://wa.me/254758486402?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+// Place order
 async function placeOrder() {
     // Validate inputs
     if (!selectedSize) {
@@ -59,6 +174,7 @@ async function placeOrder() {
     const payment = document.querySelector('input[name="payment"]:checked').value;
     const unitPrice = orderType === 'refill' ? refillPrice : totalWithBottle;
     const total = unitPrice * quantity;
+    const specialRequests = document.getElementById('specialRequests').value.trim() || 'None';
 
     // Create order object
     const orderData = {
@@ -72,8 +188,10 @@ async function placeOrder() {
         customerEmail: document.getElementById('customerEmail').value.trim() || 'Not provided',
         deliveryAddress: address,
         deliveryTime: document.getElementById('deliveryTime').value.trim() || 'Anytime',
+        specialRequests: specialRequests,
         paymentMethod: payment,
         status: 'pending',
+        shopLocation: 'Makutano, Meru Town (Next to Kinoru Dispensary)',
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
 
@@ -84,10 +202,9 @@ async function placeOrder() {
     btn.disabled = true;
 
     try {
-        // Save to Firebase ONLY - REMOVE EMAILJS FOR NOW
+        // Save to Firebase
         const docRef = await db.collection('orders').add(orderData);
 
-        // Show success message without email
         showMessage('orderMessage', `✅ Order placed successfully! Order ID: ${docRef.id}`, 'success');
 
         // Clear form but keep product selected
@@ -96,6 +213,7 @@ async function placeOrder() {
         document.getElementById('customerEmail').value = '';
         document.getElementById('deliveryAddress').value = '';
         document.getElementById('deliveryTime').value = '';
+        document.getElementById('specialRequests').value = '';
         document.getElementById('quantity').value = '1';
         updatePrice();
 
@@ -124,16 +242,19 @@ function orderViaWhatsApp() {
     const quantity = parseInt(document.getElementById('quantity').value) || 1;
     const orderType = document.querySelector('input[name="orderType"]:checked').value;
     const deliveryTime = document.getElementById('deliveryTime').value.trim() || 'Anytime';
+    const specialRequests = document.getElementById('specialRequests').value.trim() || 'None';
 
-    let message = `Hello Cresco Water,%0A%0A`;
-    message += `I would like to place an order:%0A`;
+    let message = `Hello Cresco Water (Makutano Shop),%0A%0A`;
+    message += `I would like to place an order from your shop next to Kinoru Dispensary:%0A`;
     message += `*Product:* ${selectedSize}%0A`;
     message += `*Quantity:* ${quantity}%0A`;
     message += `*Type:* ${orderType === 'refill' ? 'Refill Only' : 'With New Bottle'}%0A`;
     if (name) message += `*Name:* ${name}%0A`;
     if (phone) message += `*Phone:* ${phone}%0A`;
-    if (address) message += `*Address:* ${address}%0A`;
+    if (address) message += `*Delivery Address:* ${address}%0A`;
     message += `*Delivery Time:* ${deliveryTime}%0A`;
+    if (specialRequests !== 'None') message += `*Special Requests:* ${specialRequests}%0A`;
+    message += `%0A*Shop Location:* Makutano, Meru Town (Next to Kinoru Dispensary, Kinoru Stadium Road)`;
 
     window.open(`https://wa.me/254758486402?text=${message}`, '_blank');
 }
@@ -144,20 +265,16 @@ function contactViaWhatsApp() {
     const email = document.getElementById('contactEmail').value.trim();
     const message = document.getElementById('contactMessage').value.trim();
 
-    let waMessage = `Hello Cresco Water,%0A%0A`;
+    let waMessage = `Hello Cresco Water (Makutano Shop),%0A%0A`;
     if (name) waMessage += `*Name:* ${name}%0A`;
     if (email) waMessage += `*Email:* ${email}%0A`;
-    waMessage += `*Message:* ${message || 'I have a question'}`;
+    waMessage += `*Message:* ${message || 'I have a question about your services'}%0A%0A`;
+    waMessage += `*Your Location:* Makutano, Meru`;
 
     window.open(`https://wa.me/254758486402?text=${waMessage}`, '_blank');
 }
 
-// Open WhatsApp directly
-function openWhatsApp() {
-    window.open(`https://wa.me/254758486402?text=Hello%20Cresco%20Water%2C%20I%20would%20like%20to%20make%20an%20order.`, '_blank');
-}
-
-// Send contact message - FIXED VERSION
+// Send contact message
 async function sendMessage() {
     const name = document.getElementById('contactName').value.trim();
     const email = document.getElementById('contactEmail').value.trim();
@@ -174,11 +291,12 @@ async function sendMessage() {
     btn.disabled = true;
 
     try {
-        // Save to Firebase ONLY - REMOVE EMAILJS FOR NOW
+        // Save to Firebase
         await db.collection('messages').add({
             name,
             email,
             message,
+            location: 'Makutano, Meru',
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             read: false,
             replied: false
@@ -200,6 +318,11 @@ async function sendMessage() {
     }
 }
 
+// Get directions function
+function getDirections() {
+    window.open('https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru', '_blank');
+}
+
 // Show message helper
 function showMessage(elementId, text, type) {
     const element = document.getElementById(elementId);
@@ -215,7 +338,7 @@ function showMessage(elementId, text, type) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Customer page loaded');
+    console.log('Customer page loaded - Makutano, Meru location');
 
     // Add event listener for order type change
     document.querySelectorAll('input[name="orderType"]').forEach(radio => {
@@ -226,105 +349,3 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('quantity').addEventListener('input', updatePrice);
     document.getElementById('quantity').addEventListener('change', updatePrice);
 });
-// Select service from services section
-function selectService(service) {
-    // Map service to appropriate size/defaults
-    let size = '';
-    let refillPrice = 0;
-    let emptyBottle = 0;
-    let totalWithBottle = 0;
-
-    switch (service) {
-        case 'Water Refill':
-            size = '20 LTRS';
-            refillPrice = 150;
-            emptyBottle = 300;
-            totalWithBottle = 450;
-            break;
-        case 'Home Delivery':
-            size = '20 LTRS';
-            refillPrice = 150;
-            emptyBottle = 300;
-            totalWithBottle = 450;
-            break;
-        case 'Event Catering':
-        case 'Bulk Supply':
-            // For custom services, pre-fill order form with note
-            document.getElementById('specialRequests').value = `Service: ${service}. Please contact me for details.`;
-            size = '20 LTRS';
-            refillPrice = 150;
-            emptyBottle = 300;
-            totalWithBottle = 450;
-            break;
-        case 'Custom Branding':
-            size = '500 ML';
-            refillPrice = 5;
-            emptyBottle = 25;
-            totalWithBottle = 30;
-            document.getElementById('specialRequests').value = 'Interested in custom branding. Please provide options.';
-            break;
-        case 'Dispenser Rental':
-            size = 'Dispenser';
-            refillPrice = 0;
-            emptyBottle = 500;
-            totalWithBottle = 500;
-            document.querySelector('input[name="orderType"][value="withBottle"]').checked = true;
-            break;
-        case 'Water Testing':
-            size = 'Water Testing';
-            refillPrice = 500;
-            emptyBottle = 0;
-            totalWithBottle = 500;
-            document.querySelector('input[name="orderType"][value="refill"]').checked = true;
-            break;
-        default:
-            size = '20 LTRS';
-            refillPrice = 150;
-            emptyBottle = 300;
-            totalWithBottle = 450;
-    }
-
-    // Call selectProduct with the appropriate values
-    selectProduct(size, refillPrice, emptyBottle, totalWithBottle);
-
-    // Add service note to special requests if not already set
-    const specialRequests = document.getElementById('specialRequests');
-    if (!specialRequests.value.includes(service)) {
-        if (specialRequests.value) {
-            specialRequests.value += `\nService: ${service}`;
-        } else {
-            specialRequests.value = `Service: ${service}`;
-        }
-    }
-
-    // Show success message
-    showMessage('orderMessage', `✅ ${service} selected! Please complete the form below.`, 'success');
-}
-
-// Emergency order function
-function emergencyOrder() {
-    selectService('Emergency Water');
-    document.getElementById('specialRequests').value = '🚨 EMERGENCY ORDER - URGENT';
-    document.getElementById('deliveryTime').value = 'ASAP - Within 1 hour';
-
-    // Scroll to order form
-    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
-
-    // Highlight the form
-    const orderForm = document.querySelector('.order-container');
-    orderForm.style.animation = 'highlight 1s ease';
-    setTimeout(() => {
-        orderForm.style.animation = '';
-    }, 1000);
-}
-
-// Add highlight animation to CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes highlight {
-        0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
-        50% { box-shadow: 0 0 30px 10px rgba(255, 68, 68, 0.7); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
-    }
-`;
-document.head.appendChild(style);
