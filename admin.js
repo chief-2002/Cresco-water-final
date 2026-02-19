@@ -5,20 +5,13 @@ let currentMessageId = null;
 // Helper function to safely format date
 function formatDate(timestamp) {
     try {
-        // If it's a Firebase Timestamp with toDate method
         if (timestamp && typeof timestamp.toDate === 'function') {
             return timestamp.toDate();
-        }
-        // If it's a string timestamp
-        else if (timestamp && typeof timestamp === 'string') {
+        } else if (timestamp && typeof timestamp === 'string') {
             return new Date(timestamp);
-        }
-        // If it's a number timestamp
-        else if (timestamp && typeof timestamp === 'number') {
+        } else if (timestamp && typeof timestamp === 'number') {
             return new Date(timestamp);
-        }
-        // Default to current date
-        else {
+        } else {
             return new Date();
         }
     } catch (error) {
@@ -80,7 +73,7 @@ function setupRealtimeListeners() {
     });
 }
 
-// Load orders - FIXED VERSION
+// Load orders
 async function loadOrders() {
     const ordersList = document.getElementById('ordersList');
     ordersList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading orders...</div>';
@@ -102,9 +95,6 @@ async function loadOrders() {
         let html = '';
         snapshot.forEach(doc => {
             const order = doc.data();
-            console.log('Order data:', order);
-
-            // Safely parse the date
             const date = formatDate(order.timestamp);
 
             html += `
@@ -120,7 +110,7 @@ async function loadOrders() {
                     <div><i class="fas fa-phone"></i> ${order.customerPhone || 'N/A'}</div>
                     <div><i class="fas fa-tag"></i> ${order.size || 'N/A'} x${order.quantity || 0}</div>
                     <div><i class="fas fa-money-bill"></i> KSh ${order.total || 0}</div>
-                    <div><small>${order.deliveryAddress ? order.deliveryAddress.substring(0, 30) : 'No address'}</small></div>
+                    <div><small><i class="fas fa-map-marker-alt"></i> ${order.shopLocation || 'Makutano Shop'}</small></div>
                 </div>
             `;
         });
@@ -136,7 +126,7 @@ async function loadOrders() {
     }
 }
 
-// Load messages - FIXED VERSION
+// Load messages
 async function loadMessages() {
     const messagesList = document.getElementById('messagesList');
     messagesList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading messages...</div>';
@@ -158,9 +148,6 @@ async function loadMessages() {
         let html = '';
         snapshot.forEach(doc => {
             const msg = doc.data();
-            console.log('Message data:', msg);
-
-            // Safely parse the date
             const date = formatDate(msg.timestamp);
             const readStatus = msg.read ? 'read' : 'unread';
 
@@ -174,6 +161,7 @@ async function loadMessages() {
                         <span>${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
                     </div>
                     <div><i class="fas fa-envelope"></i> ${msg.email || 'N/A'}</div>
+                    <div><i class="fas fa-map-marker-alt"></i> ${msg.location || 'Makutano, Meru'}</div>
                     <div class="message-preview">${(msg.message || '').substring(0, 100)}${msg.message && msg.message.length > 100 ? '...' : ''}</div>
                 </div>
             `;
@@ -208,7 +196,7 @@ async function loadStats() {
     }
 }
 
-// Show order details - FIXED VERSION
+// Show order details
 async function showOrderDetails(orderId) {
     currentOrderId = orderId;
 
@@ -237,6 +225,7 @@ async function showOrderDetails(orderId) {
             <p><strong>Address:</strong> ${order.deliveryAddress || 'N/A'}</p>
             <p><strong>Delivery Time:</strong> ${order.deliveryTime || 'Anytime'}</p>
             <p><strong>Special Requests:</strong> ${order.specialRequests || 'None'}</p>
+            <p><strong>Shop Location:</strong> ${order.shopLocation || 'Makutano, Meru (Next to Kinoru Dispensary)'}</p>
             <p><strong>Date:</strong> ${date.toLocaleString()}</p>
             <p><strong>Status:</strong> <span class="order-status-badge status-${order.status || 'pending'}">${order.status || 'pending'}</span></p>
         `;
@@ -250,7 +239,7 @@ async function showOrderDetails(orderId) {
     }
 }
 
-// Show message details - FIXED VERSION
+// Show message details
 async function showMessageDetails(messageId) {
     currentMessageId = messageId;
 
@@ -268,6 +257,7 @@ async function showMessageDetails(messageId) {
         document.getElementById('messageDetails').innerHTML = `
             <p><strong>From:</strong> ${msg.name || 'N/A'}</p>
             <p><strong>Email:</strong> ${msg.email || 'N/A'}</p>
+            <p><strong>Location:</strong> ${msg.location || 'Makutano, Meru'}</p>
             <p><strong>Date:</strong> ${date.toLocaleString()}</p>
             <p><strong>Status:</strong> ${msg.read ? 'Read' : 'Unread'}</p>
             <p><strong>Message:</strong></p>
@@ -339,7 +329,7 @@ async function whatsappCustomer() {
 
         const order = doc.data();
         const phone = order.customerPhone ? order.customerPhone.replace(/[^0-9]/g, '') : '254758486402';
-        const message = `Hello ${order.customerName || 'Customer'}, your order #${currentOrderId.slice(-6)} is ${order.status || 'pending'}. Thank you for choosing Cresco Water!`;
+        const message = `Hello ${order.customerName || 'Customer'}, your order #${currentOrderId.slice(-6)} is ${order.status || 'pending'}. Pickup from our Makutano shop (Next to Kinoru Dispensary). Thank you for choosing Cresco Water!`;
 
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
 
@@ -390,7 +380,7 @@ async function replyWhatsApp() {
 
         const msg = doc.data();
         const replyMessage = document.getElementById('replyMessage').value.trim() ||
-            `Hello ${msg.name || 'there'}, thank you for contacting Cresco Water. How can we help you?`;
+            `Hello ${msg.name || 'there'}, thank you for contacting Cresco Water (Makutano Shop). How can we help you?`;
 
         window.open(`https://wa.me/254758486402?text=${encodeURIComponent(replyMessage)}`, '_blank');
 
@@ -402,12 +392,12 @@ async function replyWhatsApp() {
 
 // Reply via Email
 async function replyEmail() {
-    alert('Email functionality coming soon. Please use WhatsApp for now.');
+    alert('Email functionality coming soon. Please use WhatsApp for replies.');
 }
 
 // Send custom reply
 async function sendReply() {
-    alert('Email functionality coming soon. Please use WhatsApp for now.');
+    alert('Email functionality coming soon. Please use WhatsApp for replies.');
 }
 
 // Filter orders
@@ -529,7 +519,7 @@ function closeModal(modalId) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Admin page loaded');
+    console.log('Admin page loaded - Makutano, Meru shop');
 
     // Enter key for login
     document.getElementById('adminPassword').addEventListener('keypress', function (e) {
