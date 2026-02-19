@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <!-- Navigation - Removed admin icon -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -21,6 +21,7 @@
             <div class="nav-links">
                 <a href="#home">Home</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#services">Services</a>
                 <a href="#order">Order</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -31,17 +32,88 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Pure Water,<br><span>Affordable Prices</span></h1>
-            <p>99.9% purified water refills in Makutano Town. Sustainable hydration for life.</p>
+            <p>99.9% purified water refills in Makutano, Meru Town. Sustainable hydration for life.</p>
             <div class="hero-buttons">
                 <a href="#pricing" class="btn primary"><i class="fas fa-tag"></i> View Prices</a>
                 <a href="#order" class="btn secondary"><i class="fas fa-shopping-cart"></i> Order Now</a>
-                <a href="#" class="btn whatsapp" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp
-                    Order</a>
+                <button class="btn whatsapp" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp
+                    Order</button>
+                <button class="btn"
+                    onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru', '_blank')"><i
+                        class="fas fa-map-pin"></i> Get Directions to Makutano</button>
             </div>
         </div>
     </section>
 
-    <!-- SERVICES SECTION - NEW -->
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>Water Refilling Prices</h2>
+        <div class="pricing-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Refill Cost</th>
+                        <th>Empty Bottle</th>
+                        <th>Water + Bottle</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>500 ML</td>
+                        <td>KSh 5</td>
+                        <td>KSh 25</td>
+                        <td>KSh 30</td>
+                        <td><button class="btn-small" onclick="selectProduct('500 ML', 5, 25, 30)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                    <tr>
+                        <td>1 LTR</td>
+                        <td>KSh 10</td>
+                        <td>KSh 40</td>
+                        <td>KSh 50</td>
+                        <td><button class="btn-small" onclick="selectProduct('1 LTR', 10, 40, 50)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                    <tr>
+                        <td>1.5 LTR</td>
+                        <td>KSh 15</td>
+                        <td>KSh 55</td>
+                        <td>KSh 70</td>
+                        <td><button class="btn-small" onclick="selectProduct('1.5 LTR', 15, 55, 70)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                    <tr>
+                        <td>5 LTRS</td>
+                        <td>KSh 50</td>
+                        <td>KSh 150</td>
+                        <td>KSh 200</td>
+                        <td><button class="btn-small" onclick="selectProduct('5 LTRS', 50, 150, 200)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                    <tr>
+                        <td>10 LTRS</td>
+                        <td>KSh 80</td>
+                        <td>KSh 220</td>
+                        <td>KSh 300</td>
+                        <td><button class="btn-small" onclick="selectProduct('10 LTRS', 80, 220, 300)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                    <tr>
+                        <td>20 LTRS</td>
+                        <td>KSh 150</td>
+                        <td>KSh 300</td>
+                        <td>KSh 450</td>
+                        <td><button class="btn-small" onclick="selectProduct('20 LTRS', 150, 300, 450)"><i
+                                    class="fas fa-plus"></i> Select</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
     <section id="services" class="services">
         <h2>Our Services</h2>
         <div class="services-grid">
@@ -67,7 +139,7 @@
                     <i class="fas fa-truck"></i>
                 </div>
                 <h3>Home/Office Delivery</h3>
-                <p class="service-desc">Free delivery within Makutano Town</p>
+                <p class="service-desc">Free delivery within Makutano, Meru Town</p>
                 <ul class="service-features">
                     <li><i class="fas fa-check"></i> Regular schedule</li>
                     <li><i class="fas fa-check"></i> Emergency delivery</li>
@@ -175,74 +247,6 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <h2>Water Refilling Prices</h2>
-        <div class="pricing-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Quantity</th>
-                        <th>Refill Cost</th>
-                        <th>Empty Bottle</th>
-                        <th>Water + Bottle</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>500 ML</td>
-                        <td>KSh 5</td>
-                        <td>KSh 25</td>
-                        <td>KSh 30</td>
-                        <td><button class="btn-small" onclick="selectProduct('500 ML', 5, 25, 30)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                    <tr>
-                        <td>1 LTR</td>
-                        <td>KSh 10</td>
-                        <td>KSh 40</td>
-                        <td>KSh 50</td>
-                        <td><button class="btn-small" onclick="selectProduct('1 LTR', 10, 40, 50)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                    <tr>
-                        <td>1.5 LTR</td>
-                        <td>KSh 15</td>
-                        <td>KSh 55</td>
-                        <td>KSh 70</td>
-                        <td><button class="btn-small" onclick="selectProduct('1.5 LTR', 15, 55, 70)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                    <tr>
-                        <td>5 LTRS</td>
-                        <td>KSh 50</td>
-                        <td>KSh 150</td>
-                        <td>KSh 200</td>
-                        <td><button class="btn-small" onclick="selectProduct('5 LTRS', 50, 150, 200)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                    <tr>
-                        <td>10 LTRS</td>
-                        <td>KSh 80</td>
-                        <td>KSh 220</td>
-                        <td>KSh 300</td>
-                        <td><button class="btn-small" onclick="selectProduct('10 LTRS', 80, 220, 300)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                    <tr>
-                        <td>20 LTRS</td>
-                        <td>KSh 150</td>
-                        <td>KSh 300</td>
-                        <td>KSh 450</td>
-                        <td><button class="btn-small" onclick="selectProduct('20 LTRS', 150, 300, 450)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
     <!-- Order Section -->
     <section id="order" class="order">
         <h2>Place Your Order</h2>
@@ -297,6 +301,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="specialRequests">Special Requests</label>
+                    <textarea id="specialRequests" rows="2" placeholder="Any special instructions..."></textarea>
+                </div>
+
+                <div class="form-group">
                     <label>Payment Method:</label>
                     <div class="radio-group">
                         <label><input type="radio" name="payment" value="Cash on Delivery" checked> Cash on
@@ -318,54 +327,18 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section with Real Google Maps -->
     <section id="contact" class="contact">
         <h2>Contact Us</h2>
         <div class="contact-container">
             <div class="contact-info">
                 <div class="info-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p>Makutano Town (next to the market)</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <p>+254 758 486 402</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <p>info@cresco.co.ke</p>
-                </div>
-                <div class="info-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <p>+254 758 486 402</p>
-                </div>
-            </div>
-
-            <div class="contact-form">
-                <h3>Send us a message</h3>
-                <input type="text" id="contactName" placeholder="Your Name" required>
-                <input type="email" id="contactEmail" placeholder="Your Email" required>
-                <textarea id="contactMessage" placeholder="Your Message" rows="4" required></textarea>
-                <div class="button-group">
-                    <button class="btn primary" onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                    <button class="btn whatsapp" onclick="contactViaWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </button>
-                </div>
-                <div id="contactMessageStatus" class="message"></div>
-            </div>
-        </div>
-    </section>
-        <!-- Contact Section with Real Google Maps -->
-    <section id="contact" class="contact">
-        <h2>Contact Us</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Makutano Town (next to the market)</p>
+                    <div>
+                        <p><strong>Makutano, Meru Town</strong></p>
+                        <p>Next to Kinoru Dispensary</p>
+                        <p>Kinoru Stadium Road</p>
+                    </div>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-phone"></i>
@@ -384,7 +357,7 @@
                     <p>Mon-Sat: 8am - 8pm<br>Sunday: 9am - 5pm</p>
                 </div>
             </div>
-            
+
             <div class="contact-form">
                 <h3>Send us a message</h3>
                 <input type="text" id="contactName" placeholder="Your Name" required>
@@ -402,26 +375,32 @@
             </div>
         </div>
 
-        <!-- Google Maps Section -->
+        <!-- Google Maps Section - Makutano, Meru -->
         <div class="map-section">
-            <h3>Find Us Here</h3>
+            <h3>Find Us in Makutano</h3>
+            <div class="location-details">
+                <p><i class="fas fa-map-pin"></i> <strong>Address:</strong> Makutano, Meru Town • Next to Kinoru
+                    Dispensary • Kinoru Stadium Road</p>
+            </div>
             <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.753627069985!2d37.648392!3d0.052525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwMDMnMDkuMSJOIDM3wrAzOCc1NC4yIkU!5e0!3m2!1sen!2ske!4v1234567890!5m2!1sen!2ske" 
-                    width="100%" 
-                    height="450" 
-                    style="border:0; border-radius: 20px;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.783838281725!2d37.65083797407185!3d0.045379999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1787a1f1a1f1a1f1%3A0x123456789abcdef!2sKinoru%20Dispensary!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske"
+                    width="100%" height="450" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
             <div class="map-buttons">
-                <a href="https://maps.google.com/?q=Makutano+Town+Kenya" target="_blank" class="btn secondary">
+                <a href="https://www.google.com/maps/search/?api=1&query=Kinoru+Dispensary+Meru" target="_blank"
+                    class="btn secondary">
                     <i class="fas fa-directions"></i> Open in Google Maps
                 </a>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Makutano+Town+Kenya" target="_blank" class="btn secondary">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru" target="_blank"
+                    class="btn secondary">
                     <i class="fas fa-route"></i> Get Directions
+                </a>
+                <a href="https://www.google.com/maps/place/Kinoru+Dispensary/@0.04538,37.650838,17z" target="_blank"
+                    class="btn secondary">
+                    <i class="fas fa-map-marked-alt"></i> View on Map
                 </a>
             </div>
         </div>
@@ -435,7 +414,11 @@
                 <p>Pure, affordable refills every day</p>
             </div>
             <div class="footer-section">
-                <p>&copy; 2026/2027 Cresco Water. All rights reserved.</p>
+                <p><i class="fas fa-map-marker-alt"></i> Makutano, Meru Town • Next to Kinoru Dispensary</p>
+                <p><i class="fas fa-phone"></i> +254 758 486 402</p>
+            </div>
+            <div class="footer-section">
+                <p>&copy; 2024 Cresco Water. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -453,7 +436,4 @@
     <script src="script.js"></script>
 </body>
 
-
 </html>
-
-
