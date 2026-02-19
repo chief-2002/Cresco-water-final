@@ -555,4 +555,52 @@ footer {
     .service-card {
         padding: 1.5rem;
     }
+    /* Map Section */
+.map-section {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.map-section h3 {
+    color: #015d71;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.map-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 1.5rem;
+}
+
+.map-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.map-buttons .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background: white;
+    color: #2fa1c1;
+    border: 2px solid #2fa1c1;
+}
+
+.map-buttons .btn:hover {
+    background: #2fa1c1;
+    color: white;
+}
+
+/* Hours styling */
+.info-item .fa-clock {
+    color: #2fa1c1;
+}
+
+.info-item p {
+    line-height: 1.6;
+}
+
 }
