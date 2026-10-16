@@ -8,6 +8,84 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .mpesa-section {
+            background: linear-gradient(135deg, #00a650 0%, #007a3d 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 166, 80, 0.3);
+        }
+        .mpesa-section h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mpesa-input-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .mpesa-input-group .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 0;
+        }
+        .mpesa-input-group .form-group label {
+            color: white;
+            font-weight: 600;
+        }
+        .mpesa-input-group .form-group input {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+        }
+        .mpesa-pay-btn {
+            background: white;
+            color: #00a650;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        .order-summary-box {
+            background: #f0f9ff;
+            border: 2px solid #2fa1c1;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            color: #033b4f;
+        }
+        .order-summary-box .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .order-summary-box .summary-row.total {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #00a650;
+            border-bottom: none;
+            border-top: 2px solid #2fa1c1;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+        }
+    </style>
+<base target="_blank">
 </head>
 
 <body>
@@ -36,11 +114,10 @@
             <div class="hero-buttons">
                 <a href="#pricing" class="btn primary"><i class="fas fa-tag"></i> View Prices</a>
                 <a href="#order" class="btn secondary"><i class="fas fa-shopping-cart"></i> Order Now</a>
-                <button class="btn whatsapp" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp
-                    Order</button>
-                <button class="btn"
-                    onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru', '_blank')"><i
-                        class="fas fa-map-pin"></i> Get Directions to Makutano</button>
+                <button class="btn whatsapp" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp Order</button>
+                <button class="btn" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru', '_blank')">
+                    <i class="fas fa-map-pin"></i> Get Directions to Makutano
+                </button>
             </div>
         </div>
     </section>
@@ -65,48 +142,42 @@
                         <td>KSh 5</td>
                         <td>KSh 25</td>
                         <td>KSh 30</td>
-                        <td><button class="btn-small" onclick="selectProduct('500 ML', 5, 25, 30)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('500 ML', 5, 25, 30)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                     <tr>
                         <td>1 LTR</td>
                         <td>KSh 10</td>
                         <td>KSh 40</td>
                         <td>KSh 50</td>
-                        <td><button class="btn-small" onclick="selectProduct('1 LTR', 10, 40, 50)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('1 LTR', 10, 40, 50)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                     <tr>
                         <td>1.5 LTR</td>
                         <td>KSh 15</td>
                         <td>KSh 55</td>
                         <td>KSh 70</td>
-                        <td><button class="btn-small" onclick="selectProduct('1.5 LTR', 15, 55, 70)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('1.5 LTR', 15, 55, 70)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                     <tr>
                         <td>5 LTRS</td>
                         <td>KSh 50</td>
                         <td>KSh 150</td>
                         <td>KSh 200</td>
-                        <td><button class="btn-small" onclick="selectProduct('5 LTRS', 50, 150, 200)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('5 LTRS', 50, 150, 200)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                     <tr>
                         <td>10 LTRS</td>
                         <td>KSh 80</td>
                         <td>KSh 220</td>
                         <td>KSh 300</td>
-                        <td><button class="btn-small" onclick="selectProduct('10 LTRS', 80, 220, 300)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('10 LTRS', 80, 220, 300)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                     <tr>
                         <td>20 LTRS</td>
                         <td>KSh 150</td>
                         <td>KSh 300</td>
                         <td>KSh 450</td>
-                        <td><button class="btn-small" onclick="selectProduct('20 LTRS', 150, 300, 450)"><i
-                                    class="fas fa-plus"></i> Select</button></td>
+                        <td><button class="btn-small" onclick="selectProduct('20 LTRS', 150, 300, 450)"><i class="fas fa-plus"></i> Select</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -117,11 +188,8 @@
     <section id="services" class="services">
         <h2>Our Services</h2>
         <div class="services-grid">
-            <!-- Service 1: Water Refill -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-bottle-water"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-bottle-water"></i></div>
                 <h3>Water Refill</h3>
                 <p class="service-desc">99.9% purified drinking water refill at our station</p>
                 <ul class="service-features">
@@ -132,12 +200,8 @@
                 <div class="service-price">From KSh 5</div>
                 <button class="btn-small" onclick="selectService('Water Refill')">Select</button>
             </div>
-
-            <!-- Service 2: Home/Office Delivery -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-truck"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-truck"></i></div>
                 <h3>Home/Office Delivery</h3>
                 <p class="service-desc">Free delivery within Makutano, Meru Town</p>
                 <ul class="service-features">
@@ -148,12 +212,8 @@
                 <div class="service-price">Min order KSh 200</div>
                 <button class="btn-small" onclick="selectService('Home Delivery')">Select</button>
             </div>
-
-            <!-- Service 3: Event Catering -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-glass-cheers"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-glass-cheers"></i></div>
                 <h3>Event Catering</h3>
                 <p class="service-desc">Perfect for weddings, parties, and corporate events</p>
                 <ul class="service-features">
@@ -164,12 +224,8 @@
                 <div class="service-price">Custom quote</div>
                 <button class="btn-small" onclick="selectService('Event Catering')">Inquire</button>
             </div>
-
-            <!-- Service 4: Custom Branding -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-tag"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-tag"></i></div>
                 <h3>Custom Branding</h3>
                 <p class="service-desc">Personalized labels for your business or event</p>
                 <ul class="service-features">
@@ -180,12 +236,8 @@
                 <div class="service-price">KSh 10 extra/bottle</div>
                 <button class="btn-small" onclick="selectService('Custom Branding')">Select</button>
             </div>
-
-            <!-- Service 5: Dispenser Rental -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-cube"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-cube"></i></div>
                 <h3>Dispenser Rental</h3>
                 <p class="service-desc">Electric and manual water dispensers</p>
                 <ul class="service-features">
@@ -196,12 +248,8 @@
                 <div class="service-price">KSh 500 deposit</div>
                 <button class="btn-small" onclick="selectService('Dispenser Rental')">Select</button>
             </div>
-
-            <!-- Service 6: Bulk Supply -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-warehouse"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-warehouse"></i></div>
                 <h3>Bulk Supply</h3>
                 <p class="service-desc">For schools, hospitals, and businesses</p>
                 <ul class="service-features">
@@ -212,12 +260,8 @@
                 <div class="service-price">Call for quote</div>
                 <button class="btn-small" onclick="selectService('Bulk Supply')">Contact</button>
             </div>
-
-            <!-- Service 7: Emergency Water -->
             <div class="service-card emergency">
-                <div class="service-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-exclamation-triangle"></i></div>
                 <h3>Emergency Water</h3>
                 <p class="service-desc">24/7 emergency water supply</p>
                 <ul class="service-features">
@@ -228,12 +272,8 @@
                 <div class="service-price">KSh 100 extra</div>
                 <button class="btn-small emergency-btn" onclick="emergencyOrder()">🚨 Emergency</button>
             </div>
-
-            <!-- Service 8: Water Testing -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-flask"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-flask"></i></div>
                 <h3>Water Testing</h3>
                 <p class="service-desc">Professional water quality testing</p>
                 <ul class="service-features">
@@ -257,17 +297,14 @@
                 <div class="form-group">
                     <label>Order Type:</label>
                     <div class="radio-group">
-                        <label><input type="radio" name="orderType" value="refill" checked onchange="updatePrice()">
-                            Refill Only</label>
-                        <label><input type="radio" name="orderType" value="withBottle" onchange="updatePrice()"> With
-                            New Bottle</label>
+                        <label><input type="radio" name="orderType" value="refill" checked onchange="updatePrice()"> Refill Only</label>
+                        <label><input type="radio" name="orderType" value="withBottle" onchange="updatePrice()"> With New Bottle</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" min="1" value="1" onchange="updatePrice()"
-                        onkeyup="updatePrice()">
+                    <input type="number" id="quantity" min="1" value="1" onchange="updatePrice()" onkeyup="updatePrice()">
                 </div>
 
                 <div class="price-display">
@@ -282,7 +319,7 @@
 
                 <div class="form-group">
                     <label for="customerPhone">Phone Number *</label>
-                    <input type="tel" id="customerPhone" required>
+                    <input type="tel" id="customerPhone" placeholder="e.g., 0712345678" required>
                 </div>
 
                 <div class="form-group">
@@ -290,9 +327,35 @@
                     <input type="email" id="customerEmail">
                 </div>
 
+                <!-- Structured Makutano Landmark Location Selector -->
                 <div class="form-group">
-                    <label for="deliveryAddress">Delivery Address *</label>
-                    <textarea id="deliveryAddress" rows="3" required></textarea>
+                    <label for="deliveryAddress">Delivery Location (Makutano, Meru) *</label>
+                    <select id="deliveryAddress" class="form-control" required onchange="updateOrderSummary()">
+                        <option value="" disabled selected>-- Choose Area  --</option>
+                        <optgroup label="Streets & Roads">
+                            <option value="Kinoru Stadium Road">Kinoru Stadium Road</option>
+                            <option value="Meru-Nanyuki Highway">Meru-Nanyuki Highway</option>
+                            <option value="Makutano Main Street">Makutano Main Street</option>
+                        </optgroup>
+                        <optgroup label="Restaurants & Cafes">
+                            <option value="Kinoru View Hotel Area">Kinoru View Hotel Area</option>
+                            <option value="Makutano Stage Cafes">Makutano Stage Cafes</option>
+                        </optgroup>
+                        <optgroup label="Bars & Lounges">
+                            <option value="Makutano Club Zone">Makutano Club Zone</option>
+                            <option value="Stadium Bar Environs">Stadium Bar Environs</option>
+                        </optgroup>
+                        <optgroup label="Apartments & Estates">
+                            <option value="Kinoru Estate">Kinoru Estate</option>
+                            <option value="Makutano Heights Apartments">Makutano Heights Apartments</option>
+                            <option value="Meru Teachers Quarters">Meru Teachers Quarters</option>
+                        </optgroup>
+                        <optgroup label="Key Landmarks">
+                            <option value="Next to Kinoru Dispensary">Next to Kinoru Dispensary</option>
+                            <option value="Kinoru Stadium Gate">Kinoru Stadium Gate</option>
+                            <option value="Makutano ACK Church">Makutano ACK Church</option>
+                        </optgroup>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -305,29 +368,88 @@
                     <textarea id="specialRequests" rows="2" placeholder="Any special instructions..."></textarea>
                 </div>
 
+                <!-- Payment Method Selection -->
                 <div class="form-group">
                     <label>Payment Method:</label>
                     <div class="radio-group">
-                        <label><input type="radio" name="payment" value="Cash on Delivery" checked> Cash on
-                            Delivery</label>
-                        <label><input type="radio" name="payment" value="M-PESA"> M-PESA</label>
+                        <label><input type="radio" name="payment" value="Cash on Delivery" checked onchange="togglePaymentMethod()"> Cash on Delivery</label>
+                        <label><input type="radio" name="payment" value="M-PESA" onchange="togglePaymentMethod()"> M-PESA</label>
                     </div>
                 </div>
 
-                <div class="button-group">
+                <!-- M-PESA Payment Section -->
+                <div id="mpesaSection" class="mpesa-section" style="display: none;">
+                    <h3><i class="fas fa-mobile-alt"></i> Pay with M-PESA</h3>
+
+                    <div class="order-summary-box" id="mpesaOrderSummary">
+                        <h4>Order Summary</h4>
+                        <div class="summary-row">
+                            <span>Product:</span>
+                            <span id="summaryProduct">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Quantity:</span>
+                            <span id="summaryQuantity">-</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Type:</span>
+                            <span id="summaryType">-</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total to Pay:</span>
+                            <span id="summaryTotal">KSh 0</span>
+                        </div>
+                    </div>
+
+                    <div class="mpesa-input-group">
+                        <div class="form-group">
+                            <label for="mpesaPhone">M-PESA Phone Number *</label>
+                            <input type="tel" id="mpesaPhone" placeholder="e.g., 0712345678">
+                        </div>
+                        <button id="mpesaPayBtn" class="mpesa-pay-btn" onclick="handleMpesaPaymentFromForm()">
+                            <i class="fas fa-mobile-alt"></i> Pay with M-PESA
+                        </button>
+                    </div>
+
+                    <div class="mpesa-info" style="margin-top: 1rem;">
+                        <i class="fas fa-info-circle"></i>
+                        You will receive an STK push on your phone. Enter your M-PESA PIN to complete payment.
+                    </div>
+
+                    <div id="mpesaMessage" class="message" style="display: none; margin-top: 1rem;"></div>
+                </div>
+
+                <div class="button-group" id="cashButtons" style="margin-top: 1.5rem;">
                     <button class="btn primary" onclick="placeOrder()">
-                        <i class="fas fa-check"></i> Place Order
+                        <i class="fas fa-check"></i> Place Order (Cash on Delivery)
                     </button>
                     <button class="btn whatsapp" onclick="orderViaWhatsApp()">
                         <i class="fab fa-whatsapp"></i> Order via WhatsApp
                     </button>
                 </div>
+
                 <div id="orderMessage" class="message"></div>
             </div>
         </div>
+
+        <!-- 🆕 CUSTOMER ORDER TRACKING & DELIVERY CONFIRMATION CARD -->
+        <div class="order-tracking-section" style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <h3 style="color: #015d71; margin-bottom: 1rem;"><i class="fas fa-search-location"></i> Track & Confirm Your Order Delivery</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">Enter your phone number to view your active orders and confirm once you've received your delivery.</p>
+            
+            <div class="form-group">
+                <label for="trackPhone">Your Phone Number *</label>
+                <input type="tel" id="trackPhone" placeholder="e.g., 0712345678">
+            </div>
+            <button class="btn primary" onclick="trackCustomerOrder()">
+                <i class="fas fa-binoculars"></i> Look Up My Orders
+            </button>
+
+            <div id="trackingResult" style="margin-top: 1.5rem;"></div>
+        </div>
     </section>
 
-    <!-- Contact Section with Real Google Maps -->
+    <!-- Contact Section -->
     <section id="contact" class="contact">
         <h2>Contact Us</h2>
         <div class="contact-container">
@@ -374,36 +496,6 @@
                 <div id="contactMessageStatus" class="message"></div>
             </div>
         </div>
-
-        <!-- Google Maps Section - Makutano, Meru -->
-        <div class="map-section">
-            <h3>Find Us in Makutano</h3>
-            <div class="location-details">
-                <p><i class="fas fa-map-pin"></i> <strong>Address:</strong> Makutano, Meru Town • Next to Kinoru
-                    Dispensary • Kinoru Stadium Road</p>
-            </div>
-            <div class="map-container">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.783838281725!2d37.65083797407185!3d0.045379999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1787a1f1a1f1a1f1%3A0x123456789abcdef!2sKinoru%20Dispensary!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske"
-                    width="100%" height="450" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-            <div class="map-buttons">
-                <a href="https://www.google.com/maps/search/?api=1&query=Kinoru+Dispensary+Meru" target="_blank"
-                    class="btn secondary">
-                    <i class="fas fa-directions"></i> Open in Google Maps
-                </a>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Kinoru+Dispensary+Meru" target="_blank"
-                    class="btn secondary">
-                    <i class="fas fa-route"></i> Get Directions
-                </a>
-                <a href="https://www.google.com/maps/place/Kinoru+Dispensary/@0.04538,37.650838,17z" target="_blank"
-                    class="btn secondary">
-                    <i class="fas fa-map-marked-alt"></i> View on Map
-                </a>
-            </div>
-        </div>
     </section>
 
     <!-- Footer -->
@@ -423,9 +515,9 @@
         </div>
     </footer>
 
-    <!-- Admin Link (hidden but accessible) -->
+    <!-- Admin Link -->
     <div class="admin-link-hidden">
-        <a href="admin.html">Admin</a>
+        <a href="admin.html">Admin Portal</a>
     </div>
 
     <!-- Scripts -->
@@ -433,6 +525,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="firebase-config.js"></script>
+    <script src="mpesa.js"></script>
     <script src="script.js"></script>
 </body>
 
