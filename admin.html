@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+<base target="_blank">
 </head>
 
 <body>
@@ -15,6 +16,13 @@
     <div id="loginSection" class="login-section">
         <div class="login-box">
             <h2><i class="fas fa-droplet"></i> Cresco Staff Portal</h2>
+            <label for="adminRole" style="font-weight:600; color:#555; font-size:0.9rem;">Sign in as:</label>
+            <select id="adminRole">
+                <option value="admin">Admin (Master)</option>
+                <option value="assistant">Assistant / Junior Staff</option>
+                <option value="dispatcher">Dispatcher</option>
+                <option value="delivery">Delivery Guy</option>
+            </select>
             <input type="password" id="adminPassword" placeholder="Enter Staff/Admin Password">
             <button class="btn" onclick="login()">Login</button>
             <div id="loginError" class="error-message"></div>
@@ -32,18 +40,19 @@
             </div>
         </div>
 
-        <!-- Role Switcher Tabs -->
-        <div class="role-selector" style="display:flex; gap:10px; margin-bottom:2rem;">
-            <button class="role-btn btn primary active" onclick="switchRole('dispatcher')"><i class="fas fa-clipboard-check"></i> Dispatcher Panel</button>
-            <button class="role-btn btn secondary" onclick="switchRole('delivery')"><i class="fas fa-motorcycle"></i> Delivery Guy Panel</button>
-            <button class="role-btn btn secondary" onclick="switchRole('admin')"><i class="fas fa-user-shield"></i> Admin Master View</button>
+        <!-- Role Switcher Tabs (visible to Admin only) -->
+        <div class="role-selector" style="display:flex; gap:10px; margin-bottom:2rem; flex-wrap:wrap;">
+            <button class="role-btn btn primary" data-role="dispatcher" onclick="switchRole('dispatcher')"><i class="fas fa-clipboard-check"></i> Dispatcher Panel</button>
+            <button class="role-btn btn secondary" data-role="delivery" onclick="switchRole('delivery')"><i class="fas fa-motorcycle"></i> Delivery Guy Panel</button>
+            <button class="role-btn btn secondary" data-role="assistant" onclick="switchRole('assistant')"><i class="fas fa-user-tie"></i> Assistant / Junior Panel</button>
+            <button class="role-btn btn secondary" data-role="admin" onclick="switchRole('admin')"><i class="fas fa-user-shield"></i> Admin Master View</button>
         </div>
 
         <!-- 1. DISPATCHER PANEL -->
         <div id="dispatcher-panel" class="panel active">
             <div class="admin-header" style="background: #f0f9ff; padding: 1rem;">
-                <h3>Dispatcher Dashboard</h3>
-                <p>Review customer orders, verify M-Pesa receipts or cash payments, and confirm for dispatch.</p>
+                <h3><i class="fas fa-clipboard-check"></i> Dispatcher Dashboard</h3>
+                <p>Verify M-PESA / card payments, confirm orders, then assign a rider and dispatch. COD orders are confirmed directly.</p>
             </div>
             <div class="data-list" id="dispatcherOrdersList"></div>
         </div>
@@ -51,13 +60,56 @@
         <!-- 2. DELIVERY GUY PANEL -->
         <div id="delivery-panel" class="panel" style="display:none;">
             <div class="admin-header" style="background: #f0f9ff; padding: 1rem;">
-                <h3>Delivery Team Dashboard</h3>
-                <p>Confirmed and dispatched orders. Mark as delivered once dropped off and cash is collected.</p>
+                <h3><i class="fas fa-motorcycle"></i> Delivery Team Dashboard</h3>
+                <p>Dispatched orders assigned to riders. Mark as delivered once dropped off — and confirm cash collected for COD orders.</p>
             </div>
             <div class="data-list" id="deliveryOrdersList"></div>
         </div>
 
-        <!-- 3. ADMIN MASTER PANEL -->
+        <!-- 3. ASSISTANT / JUNIOR PANEL -->
+        <div id="assistant-panel" class="panel" style="display:none;">
+            <div class="admin-header" style="background: #f0f9ff; padding: 1rem;">
+                <h3><i class="fas fa-user-tie"></i> Assistant / Junior Staff Dashboard</h3>
+                <p>View and manage all orders and customer messages. Payment verification and dispatch remain with the dispatcher.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchAssistantTab('orders', this)">All Orders</button>
+                <button class="tab-btn" onclick="switchAssistantTab('messages', this)">Messages</button>
+            </div>
+
+            <!-- Assistant Orders Tab -->
+            <div id="assistantOrdersTab" class="tab-content active">
+                <div class="filters">
+                    <select id="assistantOrderStatusFilter" onchange="loadAssistantOrders()">
+                        <option value="all">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="dispatched">Dispatched</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <input type="text" id="assistantOrderSearch" placeholder="Search by name or phone..." onkeyup="loadAssistantOrders()">
+                    <button class="btn" onclick="loadAssistantOrders()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <div id="assistantOrdersList" class="data-list"></div>
+            </div>
+
+            <!-- Assistant Messages Tab -->
+            <div id="assistantMessagesTab" class="tab-content">
+                <div class="filters">
+                    <select id="assistantMessageFilter" onchange="loadAssistantMessages()">
+                        <option value="all">All Messages</option>
+                        <option value="unread">Unread</option>
+                        <option value="read">Read</option>
+                    </select>
+                    <button class="btn" onclick="loadAssistantMessages()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <div id="assistantMessagesList" class="data-list"></div>
+            </div>
+        </div>
+
+        <!-- 4. ADMIN MASTER PANEL -->
         <div id="admin-panel" class="panel" style="display:none;">
             <!-- Stats Cards -->
             <div class="stats-grid">
@@ -181,4 +233,5 @@
     <script src="firebase-config.js"></script>
     <script src="admin.js"></script>
 </body>
+
 </html>
