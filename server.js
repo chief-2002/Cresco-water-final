@@ -19,8 +19,8 @@ const MPESA_CONFIG = {
     consumerSecret: process.env.MPESA_CONSUMER_SECRET || 'nGtUncPh35iCtiPq92H42UX2HgDzWkAi4iJMF1RVARyJ0NTvVa62fuGAdJsFPU7b',
     passkey: process.env.MPESA_PASSKEY || 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
     shortcode: process.env.MPESA_SHORTCODE || '174379',
-    // ✅ FIXED: Use ONLY the public HTTPS URL, ending with /api/mpesa/callback
-    callbackUrl: process.env.MPESA_CALLBACK_URL || 'https://unused-lip-grass.ngrok-free.dev/api/payments/callback',
+    // ✅ FIXED: Correct Render callback URL (no "mpesa" in path, HTTPS only)
+    callbackUrl: process.env.MPESA_CALLBACK_URL || 'https://cresco-water.onrender.com/api/payments/callback',
     environment: process.env.MPESA_ENV || 'sandbox'
 };
 
@@ -124,7 +124,6 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
             PartyA: formattedPhone,
             PartyB: MPESA_CONFIG.shortcode,
             PhoneNumber: formattedPhone,
-            // ✅ FIXED: This is the only correct way to pass the callback URL
             CallBackURL: MPESA_CONFIG.callbackUrl,
             AccountReference: accountReference || 'CrescoWater',
             TransactionDesc: transactionDesc || 'Water Refill Payment'
@@ -167,6 +166,8 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
 
     } catch (error) {
         console.error('STK Push Error:', error.message);
+        // ✅ ADDED: Log Safaricom's actual error response for debugging
+        console.error('Safaricom Response Data:', error.response?.data);
         res.status(500).json({
             success: false,
             message: error.message || 'Failed to initiate M-PESA payment',
@@ -288,7 +289,6 @@ app.get('/api/mpesa/status', (req, res) => {
         configured: hasCredentials(),
         environment: MPESA_CONFIG.environment,
         shortcode: MPESA_CONFIG.shortcode ? '****' + MPESA_CONFIG.shortcode.slice(-4) : null,
-        // ✅ FIXED: Display the correct callback URL in status output
         callbackUrl: MPESA_CONFIG.callbackUrl,
         message: hasCredentials()
             ? 'M-PESA is configured and ready'
