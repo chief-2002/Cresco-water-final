@@ -33,18 +33,26 @@ body {
     margin-bottom: 2rem;
 }
 
-.login-box input {
+.login-box input,
+.login-box select {
     width: 100%;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 0.6rem 0;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     font-size: 1rem;
 }
 
+.login-box input:focus,
+.login-box select:focus {
+    outline: none;
+    border-color: #2fa1c1;
+}
+
 .login-box .btn {
     width: 100%;
     padding: 1rem;
+    margin-top: 0.8rem;
     background: linear-gradient(135deg, #2fa1c1, #1a7f9c);
     color: white;
     border: none;
@@ -116,6 +124,27 @@ body {
     color: white;
 }
 
+/* Role switcher buttons */
+.role-btn.primary {
+    background: linear-gradient(135deg, #2fa1c1, #1a7f9c);
+    color: white;
+}
+
+.role-btn.secondary {
+    background: white;
+    color: #2fa1c1;
+    border: 2px solid #2fa1c1;
+}
+
+/* Panels */
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+}
+
 /* Stats Grid */
 .stats-grid {
     display: grid;
@@ -158,6 +187,7 @@ body {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -268,6 +298,16 @@ body {
     color: #856404;
 }
 
+.status-confirmed {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-dispatched {
+    background: #e2d9f3;
+    color: #4a2c7a;
+}
+
 .status-completed {
     background: #d4edda;
     color: #155724;
@@ -314,6 +354,127 @@ body {
     border: 1px solid #d6d8db;
 }
 
+/* Workflow action buttons inside order cards */
+.order-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.action-btn {
+    padding: 7px 14px;
+    font-size: 0.85rem;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn.confirm { background: #2fa1c1; }
+.action-btn.verify { background: #6f42c1; }
+.action-btn.dispatch { background: #fd7e14; }
+.action-btn.deliver { background: #28a745; }
+.action-btn.deliver-cod { background: #1e7e34; }
+.action-btn.view { background: #17a2b8; }
+
+.rider-select {
+    padding: 7px 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: white;
+}
+
+/* Status stepper (Alibaba-style progress in order modal) */
+.stepper {
+    display: flex;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.stepper .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.stepper .step::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -50%;
+    width: 100%;
+    height: 3px;
+    background: #e0e0e0;
+    z-index: 0;
+}
+
+.stepper .step:first-child::before {
+    display: none;
+}
+
+.stepper .step.done::before {
+    background: #28a745;
+}
+
+.stepper .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    font-size: 0.85rem;
+}
+
+.stepper .step.done .step-dot {
+    background: #28a745;
+}
+
+.stepper .step.active .step-dot {
+    background: #2fa1c1;
+    box-shadow: 0 0 0 5px rgba(47, 161, 193, 0.2);
+}
+
+.stepper .step.cancelled .step-dot {
+    background: #dc3545;
+}
+
+.stepper .step small {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-weight: 600;
+    font-size: 0.72rem;
+}
+
+.stepper .step.done small {
+    color: #155724;
+}
+
+.stepper .step.active small {
+    color: #2fa1c1;
+}
+
+.stepper .step.cancelled small {
+    color: #dc3545;
+}
+
 /* Message Cards */
 .message-card {
     background: #f8f9fa;
@@ -353,6 +514,7 @@ body {
     border-radius: 15px;
     font-size: 0.7rem;
     font-weight: 600;
+    margin-left: 0.4rem;
 }
 
 .status-unread {
@@ -523,5 +685,15 @@ body {
     .payment-badge {
         margin-top: 0.3rem;
         margin-left: 0;
+    }
+
+    .order-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-btn,
+    .rider-select {
+        width: 100%;
     }
 }
