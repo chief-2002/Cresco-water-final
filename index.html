@@ -84,8 +84,79 @@
             margin-top: 0.5rem;
             padding-top: 0.5rem;
         }
+
+        /* Bank Card Payment Section */
+        .card-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+        }
+        .card-section h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card-section .form-group label {
+            color: white;
+            font-weight: 600;
+        }
+        .card-section .form-group input {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+        }
+        .card-section .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .card-input-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .card-input-group .form-group {
+            flex: 1;
+            min-width: 150px;
+            margin-bottom: 0.5rem;
+        }
+        .card-input-group .form-group.small {
+            flex: 0 0 120px;
+            min-width: 100px;
+        }
+        .card-pay-btn {
+            background: white;
+            color: #1e3c72;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        .card-pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .card-icons {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .card-icons .fa-cc-visa { color: #a8c5ff; }
+        .card-icons .fa-cc-mastercard { color: #ffc7a8; }
     </style>
-<base target="_blank">
 </head>
 
 <body>
@@ -329,33 +400,52 @@
 
                 <!-- Structured Makutano Landmark Location Selector -->
                 <div class="form-group">
-                    <label for="deliveryAddress">Delivery Location (Makutano, Meru) *</label>
+                    <label for="deliveryAddress">Delivery Location (Makutano / Kinoru, Meru) *</label>
                     <select id="deliveryAddress" class="form-control" required onchange="updateOrderSummary()">
-                        <option value="" disabled selected>-- Choose Area  --</option>
+                        <option value="" disabled selected>-- Choose Area --</option>
                         <optgroup label="Streets & Roads">
+                            <option value="Makutano–Meru Road">Makutano–Meru Road</option>
+                            <option value="Meru–Nanyuki Highway (Makutano Section)">Meru–Nanyuki Highway (Makutano Section)</option>
                             <option value="Kinoru Stadium Road">Kinoru Stadium Road</option>
-                            <option value="Meru-Nanyuki Highway">Meru-Nanyuki Highway</option>
                             <option value="Makutano Main Street">Makutano Main Street</option>
+                            <option value="Makutano–Kaaga Road">Makutano–Kaaga Road</option>
+                            <option value="Katheri Road">Katheri Road</option>
                         </optgroup>
                         <optgroup label="Restaurants & Cafes">
                             <option value="Kinoru View Hotel Area">Kinoru View Hotel Area</option>
                             <option value="Makutano Stage Cafes">Makutano Stage Cafes</option>
+                            <option value="Delta Cafeteria Area">Delta Cafeteria Area</option>
+                            <option value="Hillside Restaurant Area">Hillside Restaurant Area</option>
                         </optgroup>
                         <optgroup label="Bars & Lounges">
                             <option value="Makutano Club Zone">Makutano Club Zone</option>
                             <option value="Stadium Bar Environs">Stadium Bar Environs</option>
+                            <option value="Club 501 Area">Club 501 Area</option>
+                            <option value="Signature Lounge Area">Signature Lounge Area</option>
                         </optgroup>
                         <optgroup label="Apartments & Estates">
                             <option value="Kinoru Estate">Kinoru Estate</option>
                             <option value="Makutano Heights Apartments">Makutano Heights Apartments</option>
                             <option value="Meru Teachers Quarters">Meru Teachers Quarters</option>
+                            <option value="Kaaga View Apartments">Kaaga View Apartments</option>
+                            <option value="Gakoromone Flats Area">Gakoromone Flats Area</option>
                         </optgroup>
                         <optgroup label="Key Landmarks">
-                            <option value="Next to Kinoru Dispensary">Next to Kinoru Dispensary</option>
+                            <option value="Next to Kinoru Dispensary (Shop Location)">Next to Kinoru Dispensary (Shop Location)</option>
                             <option value="Kinoru Stadium Gate">Kinoru Stadium Gate</option>
+                            <option value="Makutano Bus Stage">Makutano Bus Stage</option>
                             <option value="Makutano ACK Church">Makutano ACK Church</option>
+                            <option value="Meru School Gate">Meru School Gate</option>
+                        </optgroup>
+                        <optgroup label="Other">
+                            <option value="Pickup at Makutano Shop">Pickup at Makutano Shop</option>
                         </optgroup>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="addressDetails">Additional Directions (Optional)</label>
+                    <input type="text" id="addressDetails" placeholder="E.g., House No., Floor, 'blue gate next to...'">
                 </div>
 
                 <div class="form-group">
@@ -374,6 +464,7 @@
                     <div class="radio-group">
                         <label><input type="radio" name="payment" value="Cash on Delivery" checked onchange="togglePaymentMethod()"> Cash on Delivery</label>
                         <label><input type="radio" name="payment" value="M-PESA" onchange="togglePaymentMethod()"> M-PESA</label>
+                        <label><input type="radio" name="payment" value="Bank Card" onchange="togglePaymentMethod()"> Bank Card (Visa / Mastercard)</label>
                     </div>
                 </div>
 
@@ -419,6 +510,56 @@
                     <div id="mpesaMessage" class="message" style="display: none; margin-top: 1rem;"></div>
                 </div>
 
+                <!-- Bank Card Payment Section -->
+                <div id="cardSection" class="card-section" style="display: none;">
+                    <h3><i class="fas fa-credit-card"></i> Pay with Bank Card</h3>
+                    <div class="card-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                    </div>
+
+                    <div class="order-summary-box" style="background: rgba(255,255,255,0.95);">
+                        <div class="summary-row total" style="border-top: none; margin-top: 0; padding-top: 0;">
+                            <span>Total to Pay:</span>
+                            <span id="cardSummaryTotal">KSh 0</span>
+                        </div>
+                    </div>
+
+                    <div class="card-input-group">
+                        <div class="form-group">
+                            <label for="cardName">Name on Card *</label>
+                            <input type="text" id="cardName" placeholder="e.g., JOHN DOE">
+                        </div>
+                    </div>
+                    <div class="card-input-group">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number *</label>
+                            <input type="text" id="cardNumber" maxlength="19" placeholder="4242 4242 4242 4242">
+                        </div>
+                    </div>
+                    <div class="card-input-group">
+                        <div class="form-group small">
+                            <label for="cardExpiry">Expiry (MM/YY) *</label>
+                            <input type="text" id="cardExpiry" maxlength="5" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group small">
+                            <label for="cardCvv">CVV *</label>
+                            <input type="password" id="cardCvv" maxlength="4" placeholder="123">
+                        </div>
+                    </div>
+
+                    <button id="cardPayBtn" class="card-pay-btn" onclick="handleCardPaymentFromForm()">
+                        <i class="fas fa-lock"></i> Pay Securely with Card
+                    </button>
+
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.9;">
+                        <i class="fas fa-shield-alt"></i>
+                        Your card details are processed securely. You will receive a confirmation once payment is approved.
+                    </div>
+
+                    <div id="cardMessage" class="message" style="display: none; margin-top: 1rem;"></div>
+                </div>
+
                 <div class="button-group" id="cashButtons" style="margin-top: 1.5rem;">
                     <button class="btn primary" onclick="placeOrder()">
                         <i class="fas fa-check"></i> Place Order (Cash on Delivery)
@@ -432,17 +573,17 @@
             </div>
         </div>
 
-        <!-- 🆕 CUSTOMER ORDER TRACKING & DELIVERY CONFIRMATION CARD -->
+        <!-- CUSTOMER ORDER TRACKING & DELIVERY CONFIRMATION (Alibaba-style status timeline) -->
         <div class="order-tracking-section" style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            <h3 style="color: #015d71; margin-bottom: 1rem;"><i class="fas fa-search-location"></i> Track & Confirm Your Order Delivery</h3>
-            <p style="color: #666; margin-bottom: 1.5rem;">Enter your phone number to view your active orders and confirm once you've received your delivery.</p>
-            
+            <h3 style="color: #015d71; margin-bottom: 1rem;"><i class="fas fa-search-location"></i> Track Your Order</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">Enter the phone number you used to order and follow every step of your delivery in detail — just like on Alibaba: order placed, payment received (with M-PESA receipt / card reference), dispatch confirmation, rider pickup, and delivery. You can even confirm receipt yourself once your water arrives.</p>
+
             <div class="form-group">
                 <label for="trackPhone">Your Phone Number *</label>
                 <input type="tel" id="trackPhone" placeholder="e.g., 0712345678">
             </div>
             <button class="btn primary" onclick="trackCustomerOrder()">
-                <i class="fas fa-binoculars"></i> Look Up My Orders
+                <i class="fas fa-binoculars"></i> Track My Order
             </button>
 
             <div id="trackingResult" style="margin-top: 1.5rem;"></div>
